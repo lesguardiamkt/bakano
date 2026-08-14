@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LesLab — Hub Admin (Múltiples Fotos y Categorías)</title>
+  <style>
+    :root { --primary: #0076d6; --success: #25D366; --bg: #f4f6f9; --border: #cbd5e1; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: #1e293b; }
+    .container { max-width: 950px; margin: 0 auto; }
+    .card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    h1 { font-size: 1.5rem; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; }
+    h2 { font-size: 1.15rem; margin-top: 0; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    label { font-weight: 600; font-size: 0.85rem; color: #475569; }
+    input, select { padding: 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; background: #fafafa; }
+    .box-info { background: #e0f2fe; border: 1px solid #7dd3fc; padding: 12px; border-radius: 10px; font-size: 0.85rem; color: #0369a1; margin-bottom: 15px; }
+    .btn-main { width: 100%; background: var(--success); color: white; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+    textarea { width: 100%; height: 230px; border-radius: 10px; border: 1px solid var(--border); padding: 12px; font-family: monospace; font-size: 0.82rem; background: #0f172a; color: #38bdf8; box-sizing: border-box; }
+    .actions { display: flex; gap: 10px; margin-top: 10px; }
+    .btn-sub { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; background: #334155; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="card">
+    <h1>⚙️ Hub Admin — Procesador de Múltiples Fotos y Categorías Fine-Tuned</h1>
+    <div class="box-info">
+      💡 <b>Fotos Múltiples y Galería:</b> Si un producto tiene varias fotos en la lista, las extrae todas para que los clientes puedan ampliarlas y deslizarlas en la tienda.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>1. Datos del Proveedor y Ajustes Financieros</h2>
+    <div class="grid">
+      <div class="field">
+        <label>Emprendimiento Destino</label>
+        <select id="tienda-destino">
+          <option value="ALUNEY">ALUNEY</option>
+          <option value="Tienda 2">Tienda 2</option>
+          <option value="Tienda 3">Tienda 3</option>
+          <option value="Tienda 4">Tienda 4</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Nombre del Proveedor (Privado)</label>
+        <input type="text" id="nombre-proveedor" value="EsteticMakeup" placeholder="Ej: EsteticMakeup" required>
+      </div>
+
+      <div class="field">
+        <label>Tipo de Link Ualá Bis</label>
+        <select id="tipo-comision" onchange="actualizarComisionModo()">
+          <option value="cuotas">Link 3 Cuotas sin interés (12% + IVA)</option>
+          <option value="directo">Link 1 Pago (4.9% + IVA)</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Comisión Ualá Bis + IVA (%)</label>
+        <input type="number" id="val-comision-uala" value="14.52" step="0.01">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2. Margen Neto Deseado por Categoría (%)</h2>
+    <div class="grid">
+      <div class="field">
+        <label>Skincare / Cuidado Facial (%)</label>
+        <input type="number" id="m-maquillaje" value="45">
+      </div>
+      <div class="field">
+        <label>Maquillaje (%)</label>
+        <input type="number" id="m-maquillaje-real" value="45">
+      </div>
+      <div class="field">
+        <label>Calzado (%)</label>
+        <input type="number" id="m-calzado" value="25">
+      </div>
+      <div class="field">
+        <label>Indumentaria / Ropa (%)</label>
+        <input type="number" id="m-ropa" value="35">
+      </div>
+      <div class="field">
+        <label>Accesorios (%)</label>
+        <input type="number" id="m-accesorios" value="60">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>3. Cargar Lista del Proveedor (.CSV o .JSON)</h2>
+    <div class="field" style="margin-bottom: 15px;">
+      <input type="file" id="file-input" accept=".csv, .json">
+    </div>
+
+    <button class="btn-main" onclick="procesarScraperAcumulativo()">⚡ PROCESAR GALERÍAS Y CATEGORÍAS</button>
+  </div>
+
+  <div class="card" id="bloque-salida" style="display: none;">
+    <h2>4. JSON Generado para productos.json</h2>
+    <textarea id="json-resultado" readonly></textarea>
+    <div class="actions">
+      <button class="btn-sub" onclick="copiarJSON()">📋 Copiar JSON Completo</button>
+      <button class="btn-sub" style="background: var(--primary);" onclick="descargarJSON()">💾 Descargar productos.json</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function actualizarComisionModo() {
+    const modo = document.getElementById('tipo-comision').value;
+    document.getElementById('val-comision-uala').value = (modo === 'cuotas') ? "14.52" : "5.93";
+  }
+
+  function parseCSVRobusto(texto) {
+    let lineas = [];
+    let fila = [];
+    let enComillas = false;
+    let valorActual = '';
+
+    for (let i = 0; i < texto.length; i++) {
+      let char = texto[i];
+      let siguienteChar = texto[i + 1];
+
+      if (char === '"') {
+        if (enComillas && siguienteChar === '"') {
+          valorActual += '"';
+          i++;
+        } else {
+          enComillas = !enComillas;
+        }
+      } else if (char === ',' && !enComillas) {
+        fila.push(valorActual.trim());
+        valorActual = '';
+      } else if ((char === '\r' || char === '\n') && !enComillas) {
+        if (char === '\r' && siguienteChar === '\n') i++;
+        fila.push(valorActual.trim());
+        if (fila.length > 1 || (fila.length === 1 && fila[0] !== '')) lineas.push(fila);
+        fila = [];
+        valorActual = '';
+      } else {
+        valorActual += char;
+      }
+    }
+    if (valorActual !== '' || fila.length > 0) {
+      fila.push(valorActual.trim());
+      if (fila.length > 1 || (fila.length === 1 && fila[0] !== '')) lineas.push(fila);
+    }
+    return lineas;
+  }
+
+  function parsearPrecio(valStr) {
+    if (!valStr) return 0;
+    let s = String(valStr).replace(/\$/g, '').trim();
+    if (!s) return 0;
+
+    if (s.includes('.') && s.includes(',')) {
+      s = s.replace(/\./g, '').replace(',', '.');
+    } else if (s.includes('.')) {
+      let partes = s.split('.');
+      if (partes.length > 1 && partes[partes.length - 1].length === 3) {
+        s = partes.join('');
+      }
+    } else if (s.includes(',')) {
+      let partes = s.split(',');
+      if (partes.length > 1 && partes[partes.length - 1].length === 3) {
+        s = partes.join('');
+      } else {
+        s = s.replace(',', '.');
+      }
+    }
+    return parseFloat(s) || 0;
+  }
+
+  function clasificarProductoOptimo(nombreRaw) {
+    const n = (nombreRaw || "").toLowerCase();
+    
+    let rubro = "Cuidado Facial";
+    let cat = "Tratamientos Faciales";
+
+    if (n.includes('mascarilla nocturna') || n.includes('mascarilla de noche')) {
+      cat = "Mascarillas Nocturnas";
+    } else if (n.includes('puntos negros') || n.includes('peel off') || n.includes('parche nasal')) {
+      cat = "Limpieza de Puntos Negros";
+    } else if (n.includes('mascarilla') || n.includes('mascara')) {
+      cat = "Mascarillas Faciales";
+    } else if (n.includes('ampolla') && n.includes('exfoliante')) {
+      cat = "Ampollas Exfoliantes";
+    } else if (n.includes('ampolla')) {
+      cat = "Ampollas Concentradas";
+    } else if (n.includes('serum') || n.includes('suero') || n.includes('essence')) {
+      cat = "Sérums Faciales";
+    } else if (n.includes('contorno') || n.includes('ojos')) {
+      cat = "Contorno de Ojos";
+    } else if (n.includes('crema facial') || n.includes('crema')) {
+      cat = "Cremas Hidratantes";
+    } else if (n.includes('labial') || n.includes('labios') || n.includes('balsamo')) {
+      rubro = "Maquillaje";
+      cat = "Cuidado de Labios";
+    } else if (n.includes('base') || n.includes('corrector') || n.includes('polvo')) {
+      rubro = "Maquillaje";
+      cat = "Maquillaje de Rostro";
+    } else if (n.includes('delineador') || n.includes('sombra') || n.includes('pestañina')) {
+      rubro = "Maquillaje";
+      cat = "Maquillaje de Ojos";
+    }
+
+    return { rubro: rubro, categoria: cat };
+  }
+
+  function extraerImagenesMultiples(cadenaRaw) {
+    if (!cadenaRaw) return [];
+    if (Array.isArray(cadenaRaw)) return cadenaRaw;
+    
+    // Separa por comas, punto y coma, o saltos de línea si vienen varias fotos en la celda
+    const urls = cadenaRaw.split(/[,;\n]/).map(u => u.trim()).filter(u => u.startsWith('http://') || u.startsWith('https://'));
+    return [...new Set(urls)]; // Evita duplicados
+  }
+
+  async function procesarScraperAcumulativo() {
+    const fileInput = document.getElementById('file-input');
+    const nomProveedor = document.getElementById('nombre-proveedor').value.trim();
+
+    if (!nomProveedor) return alert('Escribe el Nombre del Proveedor.');
+    if (!fileInput.files.length) return alert('Selecciona el archivo .CSV.');
+
+    const tiendaSel = document.getElementById('tienda-destino').value;
+    const comisionUala = parseFloat(document.getElementById('val-comision-uala').value) / 100;
+    const deduccionTotal = comisionUala + 0.035;
+
+    const modo = document.getElementById('tipo-comision').value;
+    const cuotasAsignadas = (modo === 'cuotas') ? 3 : 1;
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      try {
+        let datosNuevosRaw = [];
+        const contenido = e.target.result;
+
+        if (file.name.toLowerCase().endsWith('.csv')) {
+          const filas = parseCSVRobusto(contenido);
+          if (filas.length < 2) return alert('El archivo CSV está vacío.');
+
+          const encabezados = filas[0].map(h => h.toLowerCase().replace(/[^a-z0-9_]/g, ''));
+
+          let idxNombre = 2, idxPrecio = 3, idxBotonStock = 5, idxImagen = 11;
+
+          encabezados.forEach((h, idx) => {
+            if (h.includes('image') || h.includes('imagen') || h.includes('foto')) idxImagen = idx;
+            if (h === 'data' || h.includes('nombre') || h.includes('title')) idxNombre = idx;
+            if (h === 'data2' || h.includes('precio') || h.includes('costo')) idxPrecio = idx;
+            if (h === 'data4' || h.includes('carrito') || h.includes('stock')) idxBotonStock = idx;
+          });
+
+          for (let i = 1; i < filas.length; i++) {
+            const row = filas[i];
+            if (row.length > idxNombre && row[idxNombre] !== '') {
+              const textoBoton = row[idxBotonStock] || '';
+              const stockReal = (textoBoton.toLowerCase().includes('añadir') || textoBoton.toLowerCase().includes('agregar') || textoBoton.toLowerCase().includes('carrito')) ? 10 : 0;
+
+              datosNuevosRaw.push({
+                nombre: row[idxNombre],
+                precio_costo: row[idxPrecio] || '0',
+                imagen_raw: row[idxImagen] || '',
+                stock: stockReal
+              });
+            }
+          }
+        } else {
+          datosNuevosRaw = JSON.parse(contenido);
+        }
+
+        let listaFinal = datosNuevosRaw.map((item, index) => {
+          const costo = parsearPrecio(item.precio_costo || item.costo || item.precio || 0);
+          const nombre = (item.nombre || item.title || 'Producto sin nombre').trim();
+          const clasif = clasificarProductoOptimo(nombre);
+          
+          let fotos = extraerImagenesMultiples(item.imagen_raw || item.imagen || item.imagen_url || item.image || '');
+          const fotoPrincipal = fotos.length > 0 ? fotos[0] : '';
+
+          const margenNeto = parseFloat(document.getElementById('m-maquillaje').value) / 100;
+          const precioLista = Math.round((costo * (1 + margenNeto)) / (1 - deduccionTotal));
+
+          return {
+            tienda: tiendaSel,
+            id: index + 1,
+            proveedor: nomProveedor,
+            rubro: clasif.rubro,
+            seccion: clasif.categoria,
+            categoria: clasif.categoria,
+            subcategoria: clasif.categoria,
+            nombre: nombre,
+            costo: costo,
+            lista: precioLista,
+            cuotas: cuotasAsignadas,
+            stock: item.stock !== undefined ? item.stock : 10,
+            variantes: [],
+            peso: 200,
+            imagen: fotoPrincipal,
+            imagen_url: fotoPrincipal,
+            img: fotoPrincipal,
+            imagenes: fotos // Array completo de fotos para el lightbox/modal
+          };
+        });
+
+        document.getElementById('json-resultado').value = JSON.stringify(listaFinal, null, 2);
+        document.getElementById('bloque-salida').style.display = 'block';
+
+        alert(`¡Completado!\nTotal procesados: ${listaFinal.length}\nFotos extraídas correctamente por producto.`);
+
+      } catch(err) {
+        alert('Error al procesar el archivo. Revisa que sea un formato válido.');
+      }
+    };
+
+    reader.readAsText(file);
+  }
+
+  function copiarJSON() {
+    const txt = document.getElementById('json-resultado');
+    txt.select();
+    document.execCommand('copy');
+    alert('¡Copiado al portapapeles!');
+  }
+
+  function descargarJSON() {
+    const text = document.getElementById('json-resultado').value;
+    const blob = new Blob([text], { type: "application/json" });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = "productos.json";
+    a.click();
+  }
+</script>
+</body>
+</html>
