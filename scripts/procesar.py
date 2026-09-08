@@ -39,27 +39,33 @@ def calcular_precios(costo_prenda):
     }
 
 def main():
-    catalogo = {}
+    catalogo = []
+    max_id = 0
+    
     if os.path.exists(DATA_FILE):
         try:
             with open(DATA_FILE, "r", encoding="utf-8") as f:
                 raw = json.load(f)
                 if isinstance(raw, list):
-                    catalogo = {p.get("id", str(i)): p for i, p in enumerate(raw)}
-                elif isinstance(raw, dict):
                     catalogo = raw
+                    for item in catalogo:
+                        if isinstance(item.get("id"), int) and item["id"] > max_id:
+                            max_id = item["id"]
         except Exception:
-            catalogo = {}
+            catalogo = []
+
+    # Mapeo de productos existentes por nombre para acumular/actualizar
+    existentes = {p.get("nombre", "").strip().upper(): p for p in catalogo if "nombre" in p}
 
     csv_files = glob.glob(os.path.join(SCRAPER_DIR, "*.csv"))
     if not csv_files:
-        print("No hay archivos CSV en /scraper")
+        print("No hay CSVs para procesar.")
         return
 
     for filepath in csv_files:
         try:
             df = pd.read_csv(filepath)
-        except Exception as e:
+        except Exception:
             continue
 
         for _, row in df.iterrows():
@@ -72,29 +78,62 @@ def main():
             if costo == 0:
                 continue
 
-            clean_id = re.sub(r'[^a-zA-Z0-9]', '', nombre).upper()
+            precios = calcular_precios(costo)
             imagen = str(row.get("image") or row.get("FOTOS") or "").strip()
             if imagen.lower() == "nan":
                 imagen = ""
 
-            precios = calcular_precios(costo)
-            sku = f"MNM-{clean_id[:8]}"
+            subcat = str(row.get("SUBCATEGORÍA") or "Accesorios").strip()
+            if subcat.lower() == "nan":
+                subcat = "Accesorios"
 
-            item_data = {
-                "id": clean_id,
-                "sku": sku,
-                "nombre": nombre,
-                "imagen": imagen if imagen else catalogo.get(clean_id, {}).get("imagen", ""),
-                "talles": catalogo.get(clean_id, {}).get("talles", "Talle único"),
-                "categoria": str(row.get("SUBCATEGORÍA") or catalogo.get(clean_id, {}).get("categoria", "Accesorios")),
-                "en_stock": True,
-                "precios": precios
-            }
-            catalogo[clean_id] = item_data
+            norm_name = nombre.upper()
+
+            if norm_name in existentes:
+                # Actualizar existente
+                p = existentes[norm_name]
+                p["costo"] = precios["costo_prenda"]
+                p["lista"] = precios["precio_lista"]
+                p["transferencia"] = precios["precio_transferencia"]
+                p["mayorista"] = precios["precio_mayorista"]
+                p["cuota_monto"] = precios["cuota_3"]
+                p["stock"] = 10
+                if imagen:
+                    p["imagen"] = imagen
+                    p["imagen_url"] = imagen
+                    p["img"] = imagen
+            else:
+                # Crear nuevo con la estructura exacta de tu web
+                max_id += 1
+                nuevo_prod = {
+                    "tienda": "BAKANO",
+                    "id": max_id,
+                    "proveedor": "Monamu",
+                    "rubro": "Indumentaria",
+                    "seccion": subcat,
+                    "categoria": subcat,
+                    "subcategoria": subcat,
+                    "nombre": nombre,
+                    "costo": precios["costo_prenda"],
+                    "lista": precios["precio_lista"],
+                    "transferencia": precios["precio_transferencia"],
+                    "mayorista": precios["precio_mayorista"],
+                    "cuotas": 3,
+                    "cuota_monto": precios["cuota_3"],
+                    "stock": 10,
+                    "variantes": [],
+                    "peso": 150,
+                    "imagen": imagen,
+                    "imagen_url": imagen,
+                    "img": imagen
+                }
+                catalogo.append(nuevo_prod)
+                existentes[norm_name] = nuevo_prod
 
     with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(list(catalogo.values()), f, ensure_ascii=False, indent=2)
-    print(f"Catálogo actualizado: {len(catalogo)} productos.")
+        json.dump(catalogo, f, ensure_ascii=False, indent=2)
+
+    print(f"Catálogo actualizado correctamente. Total: {len(catalogo)} items.")
 
 if __name__ == "__main__":
     main()
