@@ -3339,7 +3339,15 @@
       "cuota_3": 7300,
       "precio_transferencia": 18600,
       "precio_mayorista": 16000
-    }
+    },
+    "costo": 11500,
+    "lista": 21900,
+    "transferencia": 18600,
+    "mayorista": 16000,
+    "cuota_monto": 7300,
+    "stock": 10,
+    "imagen_url": "https://d22fxaf9t8d39k.cloudfront.net/91674169aa56b536ebd06d8761829d6c47f4171b733205e3b46c9a76cbf03edb408842.jpg",
+    "img": "https://d22fxaf9t8d39k.cloudfront.net/91674169aa56b536ebd06d8761829d6c47f4171b733205e3b46c9a76cbf03edb408842.jpg"
   },
   {
     "id": "SETGORRAMEDIASROSA",
@@ -3356,7 +3364,15 @@
       "cuota_3": 6400,
       "precio_transferencia": 16300,
       "precio_mayorista": 14100
-    }
+    },
+    "costo": 10000,
+    "lista": 19200,
+    "transferencia": 16300,
+    "mayorista": 14100,
+    "cuota_monto": 6400,
+    "stock": 10,
+    "imagen_url": "https://d22fxaf9t8d39k.cloudfront.net/c92efe410822e11e026d535eb26a7ce9e9536bd666320ec3ce63c9b53ce53504408842.jpg",
+    "img": "https://d22fxaf9t8d39k.cloudfront.net/c92efe410822e11e026d535eb26a7ce9e9536bd666320ec3ce63c9b53ce53504408842.jpg"
   },
   {
     "id": "SETGORRAMEDIASDDLADDS",
@@ -3373,7 +3389,15 @@
       "cuota_3": 7800,
       "precio_transferencia": 19900,
       "precio_mayorista": 17200
-    }
+    },
+    "costo": 12500,
+    "lista": 23400,
+    "transferencia": 19900,
+    "mayorista": 17200,
+    "cuota_monto": 7800,
+    "stock": 10,
+    "imagen_url": "https://d22fxaf9t8d39k.cloudfront.net/911f4561deacfb451b88a20cd168762468f10c6b8792b82fcf3d966a3d610da4408842.jpg",
+    "img": "https://d22fxaf9t8d39k.cloudfront.net/911f4561deacfb451b88a20cd168762468f10c6b8792b82fcf3d966a3d610da4408842.jpg"
   },
   {
     "id": "MEDIASX3ART3",
@@ -3390,7 +3414,15 @@
       "cuota_3": 4400,
       "precio_transferencia": 11200,
       "precio_mayorista": 9100
-    }
+    },
+    "costo": 6000,
+    "lista": 13200,
+    "transferencia": 11200,
+    "mayorista": 9100,
+    "cuota_monto": 4400,
+    "stock": 10,
+    "imagen_url": "https://d22fxaf9t8d39k.cloudfront.net/94c9184ab20e9d38476b0c86bdac0daf3c65dda92fe971eaa37b57eac265fd70408842.jpg",
+    "img": "https://d22fxaf9t8d39k.cloudfront.net/94c9184ab20e9d38476b0c86bdac0daf3c65dda92fe971eaa37b57eac265fd70408842.jpg"
   },
   {
     "id": "MEDIASX3NIKEPUMAADDS",
@@ -3407,7 +3439,13 @@
       "cuota_3": 4400,
       "precio_transferencia": 11200,
       "precio_mayorista": 9100
-    }
+    },
+    "costo": 6000,
+    "lista": 13200,
+    "transferencia": 11200,
+    "mayorista": 9100,
+    "cuota_monto": 4400,
+    "stock": 10
   },
   {
     "id": "MEDIASX4BEIGEPATO",
@@ -3424,7 +3462,15 @@
       "cuota_3": 5600,
       "precio_transferencia": 14300,
       "precio_mayorista": 11600
-    }
+    },
+    "costo": 8000,
+    "lista": 16800,
+    "transferencia": 14300,
+    "mayorista": 11600,
+    "cuota_monto": 5600,
+    "stock": 10,
+    "imagen_url": "https://d22fxaf9t8d39k.cloudfront.net/9420d0be33193362da3eda732a7398848763cf0d70645075856f43cffabd285d408842.jpg",
+    "img": "https://d22fxaf9t8d39k.cloudfront.net/9420d0be33193362da3eda732a7398848763cf0d70645075856f43cffabd285d408842.jpg"
   },
   {
     "id": "MEDIASX4ARTBLANCAS",
@@ -3441,6 +3487,12 @@
       "cuota_3": 5600,
       "precio_transferencia": 14300,
       "precio_mayorista": 11600
-    }
+    },
+    "costo": 8000,
+    "lista": 16800,
+    "transferencia": 14300,
+    "mayorista": 11600,
+    "cuota_monto": 5600,
+    "stock": 10
   }
 ]
