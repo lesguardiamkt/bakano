@@ -3323,5 +3323,124 @@
     "imagen": "https://esteticmakeup.com/wp-content/uploads/2026/02/contorno-ojos-niacinamida.webp",
     "imagen_url": "https://esteticmakeup.com/wp-content/uploads/2026/02/contorno-ojos-niacinamida.webp",
     "img": "https://esteticmakeup.com/wp-content/uploads/2026/02/contorno-ojos-niacinamida.webp"
+  },
+  {
+    "id": "SETBILLETERAMEDIASLESS",
+    "sku": "MNM-SETBILLE",
+    "nombre": "SET BILLETERA MEDIAS LESS",
+    "imagen": "https://d22fxaf9t8d39k.cloudfront.net/91674169aa56b536ebd06d8761829d6c47f4171b733205e3b46c9a76cbf03edb408842.jpg",
+    "talles": "Talle único",
+    "categoria": "SET BILLETERA MEDIAS LESS",
+    "en_stock": true,
+    "precios": {
+      "costo_prenda": 11500,
+      "costo_total": 12800,
+      "precio_lista": 21900,
+      "cuota_3": 7300,
+      "precio_transferencia": 18600,
+      "precio_mayorista": 16000
+    }
+  },
+  {
+    "id": "SETGORRAMEDIASROSA",
+    "sku": "MNM-SETGORRA",
+    "nombre": "SET GORRA+MEDIAS ROSA",
+    "imagen": "https://d22fxaf9t8d39k.cloudfront.net/c92efe410822e11e026d535eb26a7ce9e9536bd666320ec3ce63c9b53ce53504408842.jpg",
+    "talles": "Talle único",
+    "categoria": "SET GORRA+MEDIAS ROSA",
+    "en_stock": true,
+    "precios": {
+      "costo_prenda": 10000,
+      "costo_total": 11300,
+      "precio_lista": 19200,
+      "cuota_3": 6400,
+      "precio_transferencia": 16300,
+      "precio_mayorista": 14100
+    }
+  },
+  {
+    "id": "SETGORRAMEDIASDDLADDS",
+    "sku": "MNM-SETGORRA",
+    "nombre": "SET GORRA + MEDIAS DDL ADDS",
+    "imagen": "https://d22fxaf9t8d39k.cloudfront.net/911f4561deacfb451b88a20cd168762468f10c6b8792b82fcf3d966a3d610da4408842.jpg",
+    "talles": "Talle único",
+    "categoria": "SET GORRA + MEDIAS DDL ADDS",
+    "en_stock": true,
+    "precios": {
+      "costo_prenda": 12500,
+      "costo_total": 13800,
+      "precio_lista": 23400,
+      "cuota_3": 7800,
+      "precio_transferencia": 19900,
+      "precio_mayorista": 17200
+    }
+  },
+  {
+    "id": "MEDIASX3ART3",
+    "sku": "MNM-MEDIASX3",
+    "nombre": "MEDIAS X3 ART 3",
+    "imagen": "https://d22fxaf9t8d39k.cloudfront.net/94c9184ab20e9d38476b0c86bdac0daf3c65dda92fe971eaa37b57eac265fd70408842.jpg",
+    "talles": "Talle único",
+    "categoria": "MEDIAS X3 ART 3",
+    "en_stock": true,
+    "precios": {
+      "costo_prenda": 6000,
+      "costo_total": 7300,
+      "precio_lista": 13200,
+      "cuota_3": 4400,
+      "precio_transferencia": 11200,
+      "precio_mayorista": 9100
+    }
+  },
+  {
+    "id": "MEDIASX3NIKEPUMAADDS",
+    "sku": "MNM-MEDIASX3",
+    "nombre": "MEDIAS X3 NIKE-PUMA-ADDS",
+    "imagen": "",
+    "talles": "Talle único",
+    "categoria": "MEDIAS X3 NIKE-PUMA-ADDS",
+    "en_stock": true,
+    "precios": {
+      "costo_prenda": 6000,
+      "costo_total": 7300,
+      "precio_lista": 13200,
+      "cuota_3": 4400,
+      "precio_transferencia": 11200,
+      "precio_mayorista": 9100
+    }
+  },
+  {
+    "id": "MEDIASX4BEIGEPATO",
+    "sku": "MNM-MEDIASX4",
+    "nombre": "MEDIAS X4 BEIGE-PATO",
+    "imagen": "https://d22fxaf9t8d39k.cloudfront.net/9420d0be33193362da3eda732a7398848763cf0d70645075856f43cffabd285d408842.jpg",
+    "talles": "Talle único",
+    "categoria": "MEDIAS X4 BEIGE-PATO",
+    "en_stock": true,
+    "precios": {
+      "costo_prenda": 8000,
+      "costo_total": 9300,
+      "precio_lista": 16800,
+      "cuota_3": 5600,
+      "precio_transferencia": 14300,
+      "precio_mayorista": 11600
+    }
+  },
+  {
+    "id": "MEDIASX4ARTBLANCAS",
+    "sku": "MNM-MEDIASX4",
+    "nombre": "MEDIAS X4 ART BLANCAS",
+    "imagen": "",
+    "talles": "Talle único",
+    "categoria": "MEDIAS X4 ART BLANCAS",
+    "en_stock": true,
+    "precios": {
+      "costo_prenda": 8000,
+      "costo_total": 9300,
+      "precio_lista": 16800,
+      "cuota_3": 5600,
+      "precio_transferencia": 14300,
+      "precio_mayorista": 11600
+    }
   }
 ]
