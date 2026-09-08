@@ -3,7 +3,7 @@ name: Actualizar Catalogo
 on:
   push:
     paths:
-      - 'scraper/**.csv'
+      - 'scraper/**'
   workflow_dispatch:
 
 permissions:
@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Instalar librerías
+      - name: Instalar librerias
         run: pip install pandas
 
       - name: Ejecutar script
@@ -32,4 +32,4 @@ jobs:
           git config --global user.name "Bakano Bot"
           git config --global user.email "bot@bakano.com"
           git add productos.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto: Actualizar productos.json" && git push)
+          git diff --staged --quiet || (git commit -m "Auto: Actualizar productos.json" && git push)
