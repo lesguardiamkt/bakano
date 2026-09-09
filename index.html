@@ -1,801 +1,338 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Online — BAKANO</title>
+  <title>BAKANO | Moda Urbana & Denim Oficial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #1e293b;
-      --primary-dark: #0f172a;
-      --primary-light: #f8fafc;
-      --accent: #f59e0b;
-      --success: #16a34a;
-      --success-bg: #dcfce7;
-      --heart: #ef4444;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #1e293b;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --radius: 12px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
-
-    header {
-      background: var(--card-bg);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 0 5px 0;
-    }
-
-    .logo-row {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 15px 5px 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .brand-logo-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-decoration: none;
-    }
-
-    .brand-logo-img {
-      height: 120px !important;
-      max-height: 150px !important;
-      width: auto !important;
-      max-width: 90vw;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .sticky-bar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 8px 0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .header-actions {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      flex-wrap: wrap;
-    }
-
-    .btn-menu-toggle {
-      background: var(--primary-light);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      color: var(--primary-dark);
-      cursor: pointer;
-    }
-    .btn-menu-toggle:hover { background: #f1f5f9; }
-
-    .search-box { flex: 1; min-width: 150px; }
-    .search-box input {
-      width: 100%;
-      padding: 8px 16px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 0.88rem;
-      outline: none;
-      background: var(--primary-light);
-    }
-    .search-box input:focus { border-color: var(--primary); background: #fff; }
-
-    .sort-box select {
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text);
-      background: var(--primary-light);
-      outline: none;
-      cursor: pointer;
-    }
-
-    .btn-user {
-      background: var(--primary-light);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--primary-dark);
-      cursor: pointer;
-    }
-
-    .banner-container {
-      max-width: 1100px;
-      margin: 12px auto 0;
-      padding: 0 15px;
-    }
-    .main-banner {
-      width: 100%;
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      border-radius: var(--radius);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      text-align: center;
-      padding: 15px 18px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-      border: 2px solid #38bdf8;
-    }
-    .main-banner h2 { font-size: 1.4rem; margin-bottom: 4px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .main-banner p { font-size: 0.95rem; font-weight: 700; color: #38bdf8; margin-bottom: 6px; }
-    .main-banner .banner-step { 
-      font-size: 0.8rem; 
-      color: #ffffff; 
-      opacity: 0.95; 
-      background: rgba(255, 255, 255, 0.1); 
-      padding: 5px 12px; 
-      border-radius: 10px; 
-      backdrop-filter: blur(4px); 
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      line-height: 1.3;
-      max-width: 95%;
-    }
-
-    .side-menu-overlay {
-      display: none; position: fixed; top: 0; left: 0;
-      width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px); z-index: 99999;
-    }
-    .side-menu-overlay.active { display: block; }
-
-    .side-menu {
-      position: fixed; top: 0; left: -320px;
-      width: 300px; height: 100vh; background: white;
-      z-index: 100000; box-shadow: 5px 0 25px rgba(0,0,0,0.15);
-      transition: left 0.3s ease; display: flex; flex-direction: column;
-      padding: 20px; overflow-y: auto;
-    }
-    .side-menu.active { left: 0; }
-
-    .side-menu-header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding-bottom: 15px; border-bottom: 1px solid var(--border); margin-bottom: 20px;
-    }
-    .side-menu-header h3 { font-size: 1.3rem; color: var(--primary-dark); font-weight: 800; }
-    .btn-close-menu { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
-
-    .menu-list { list-style: none; }
-    .menu-item { margin-bottom: 12px; }
-    .menu-link {
-      display: block; padding: 10px 12px; font-weight: 600;
-      color: var(--text); text-decoration: none; border-radius: 8px; cursor: pointer;
-    }
-    .menu-link:hover { background: var(--primary-light); color: var(--primary-dark); }
-
-    .sub-menu-list { list-style: none; padding-left: 15px; display: none; margin-top: 5px; }
-    .sub-menu-list.active { display: block; }
-    .sub-menu-item { padding: 8px 10px; font-size: 0.9rem; color: var(--text-muted); cursor: pointer; border-radius: 6px; }
-    .sub-menu-item:hover { color: var(--primary-dark); background: var(--primary-light); }
-
-    .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
-    
-    .grid-products {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px;
-    }
-
-    .card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: var(--radius); overflow: hidden; display: flex;
-      flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; position: relative;
-    }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08); }
-
-    .img-wrapper { width: 100%; height: 210px; background: #f1f5f9; position: relative; overflow: hidden; }
-    .img-wrapper img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
-
-    .btn-fav {
-      position: absolute; top: 10px; left: 10px; background: rgba(255, 255, 255, 0.9);
-      border: none; width: 34px; height: 34px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; z-index: 5;
-    }
-    .btn-fav.active { color: var(--heart); }
-
-    .badge-cat {
-      position: absolute; bottom: 10px; left: 10px; background: rgba(15, 23, 42, 0.85);
-      color: white; font-size: 0.7rem; padding: 3px 8px; border-radius: 6px; backdrop-filter: blur(4px);
-    }
-
-    .card-body { padding: 14px; display: flex; flex-direction: column; flex: 1; justify-content: space-between; gap: 10px; }
-    .product-title { font-size: 0.92rem; font-weight: 700; line-height: 1.3; color: var(--text); min-height: 2.5em; }
-    
-    .price-box { display: flex; flex-direction: column; gap: 2px; }
-    .price-main-amount { font-size: 1.3rem; font-weight: 800; color: var(--text); }
-    .price-installment-text { font-size: 0.8rem; color: #0284c7; font-weight: 700; margin-bottom: 2px; }
-    .price-transfer-text { font-size: 0.85rem; font-weight: 700; color: #16a34a; }
-
-    .btn-add-cart {
-      width: 100%; background: var(--primary); color: white; border: none;
-      padding: 9px; border-radius: 8px; font-size: 0.88rem; font-weight: 700; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.2s;
-    }
-    .btn-add-cart:hover { background: var(--primary-dark); }
-
-    .cart-float-bar {
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      width: 90%; max-width: 500px; background: #0f172a; color: white;
-      padding: 12px 18px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      display: flex; justify-content: space-between; align-items: center; z-index: 998;
-      cursor: pointer; transition: transform 0.2s ease;
-    }
-    .cart-float-bar:hover { transform: translateX(-50%) scale(1.02); }
-
-    .cart-badge-count {
-      background: var(--heart); color: white; border-radius: 50%;
-      padding: 3px 8px; font-weight: bold; font-size: 0.8rem; margin-right: 8px;
-    }
-
-    .wp-float-btn {
-      position: fixed; bottom: 20px; right: 20px;
-      width: 55px; height: 55px; background: #25D366; color: white;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 28px; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4); z-index: 999;
-      text-decoration: none; transition: transform 0.2s ease;
-    }
-    .wp-float-btn:hover { transform: scale(1.1); }
-
-    footer {
-      background: white; border-top: 1px solid var(--border);
-      padding: 25px 15px; margin-top: 40px; text-align: center;
-    }
-    .footer-title { font-size: 1.1rem; font-weight: 800; color: var(--primary-dark); margin-bottom: 5px; }
-    .footer-sub { font-size: 0.85rem; color: var(--text-muted); max-width: 600px; margin: 6px auto 0; line-height: 1.4; }
-    .footer-links { display: flex; justify-content: center; gap: 12px; margin-top: 15px; flex-wrap: wrap; }
-    .footer-link {
-      display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
-      font-weight: 700; padding: 8px 16px; border-radius: 20px; font-size: 0.88rem; transition: all 0.2s;
-    }
-    .link-ig { background: #fdf2f8; color: #db2777; border: 1px solid #fbcfe8; }
-    .link-ws { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
-
-    .modal-overlay {
-      display: none; position: fixed; top: 0; left: 0;
-      width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(5px); z-index: 999999; align-items: center; justify-content: center;
-    }
-    .modal-overlay.active { display: flex !important; }
-
-    .lightbox-box { position: relative; max-width: 90vw; max-height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .lightbox-img { max-width: 90vw; max-height: 80vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .lightbox-close, .modal-close { position: absolute; top: 12px; right: 15px; background: rgba(255, 255, 255, 0.3); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 22px; cursor: pointer; z-index: 1000000; display: flex; align-items: center; justify-content: center; }
-    .modal-close { color: var(--text); background: #f1f5f9; }
-
-    .modal-box { background: white; padding: 22px; border-radius: 16px; width: 90%; max-width: 450px; position: relative; }
-    .modal-box h2 { font-size: 1.15rem; margin-bottom: 12px; color: var(--text); }
-    .modal-box input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid var(--border); border-radius: 8px; }
-    
-    .btn-save { width: 100%; padding: 10px; background: #25D366; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 0.95rem; }
-
-    .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
-    .btn-remove-item { color: #ef4444; background: none; border: none; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
-
-    .empty-msg { text-align: center; padding: 50px 15px; color: var(--text-muted); width: 100%; grid-column: 1 / -1; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #070709; color: #ffffff; }
+    .font-mono { font-family: 'IBM Plex Mono', monospace; }
+    .glass-nav { background: rgba(10, 10, 12, 0.96); backdrop-filter: blur(16px); border-bottom: 1px solid #222227; }
+    .card-luxury { background-color: #101014; border: 1px solid #222227; transition: all 0.25s ease; }
+    .card-luxury:hover { border-color: #ffffff; transform: translateY(-4px); }
+    .btn-white { background-color: #ffffff; color: #000000; font-weight: 800; }
+    .btn-white:hover { background-color: #e4e4e7; }
+    .badge-pill { background: #16161a; border: 1px solid #27272e; }
+    .badge-pill.active { background: #ffffff; color: #000000; font-weight: 900; }
+    .variant-btn { background: #16161a; border: 1px solid #383842; color: #d4d4d8; cursor: pointer; }
+    .variant-btn.selected { background: #ffffff; border-color: #ffffff; color: #000000; font-weight: 900; }
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col antialiased selection:bg-white selection:text-black">
 
-<header>
-  <div class="logo-row">
-    <a href="#" class="brand-logo-container">
-      <img id="img-logo-tienda" class="brand-logo-img" src="logo.png" alt="BAKANO" onerror="this.onerror=null; this.src='https://via.placeholder.com/200?text=BAKANO';">
-    </a>
+  <!-- MARQUESINA -->
+  <div class="bg-white text-black text-[11px] font-black uppercase tracking-widest py-2 text-center px-4 sticky top-0 z-50 shadow-md">
+    ⚡ 3 CUOTAS SIN INTERÉS &nbsp;|&nbsp; 15% OFF EN TRANSFERENCIA &nbsp;|&nbsp; ENVÍOS A TODO EL PAÍS
   </div>
-</header>
 
-<div class="sticky-bar">
-  <div class="header-actions">
-    <button class="btn-menu-toggle" onclick="toggleSideMenu()">☰ Menú</button>
-    
-    <div class="search-box">
-      <input type="text" id="input-search" placeholder="Buscar productos..." oninput="filtrarProductos()">
+  <!-- NAVEGACIÓN -->
+  <header class="sticky top-[33px] z-40 glass-nav px-4 sm:px-8 py-4 flex items-center justify-between">
+    <div class="flex items-center space-x-3">
+      <span class="text-2xl sm:text-3xl font-black tracking-tighter text-white uppercase border-b-2 border-white pb-0.5">BAKANO</span>
+      <span class="text-[9px] font-extrabold px-2 py-0.5 bg-zinc-900 text-zinc-300 border border-zinc-700 rounded-full uppercase">Oficial</span>
     </div>
 
-    <div class="sort-box">
-      <select id="select-sort" onchange="filtrarProductos()">
-        <option value="relevancia">Ordenar por</option>
-        <option value="precio-menor">Precio: Menor a Mayor</option>
-        <option value="precio-mayor">Precio: Mayor a Menor</option>
-      </select>
-    </div>
-    
-    <button class="btn-user" onclick="abrirModalLogin()" id="btn-login-header">
-      👤 <span id="txt-login-header">Ingresar</span>
+    <button onclick="abrirCarrito()" class="px-4 py-2 bg-white text-black hover:bg-zinc-200 rounded-xl text-xs font-black flex items-center gap-2 transition-all shadow-lg cursor-pointer">
+      <span>🛒 Mi Pedido</span>
+      <span id="cart-count" class="bg-black text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">0</span>
     </button>
-  </div>
-</div>
+  </header>
 
-<div class="banner-container">
-  <div class="main-banner">
-    <h2>🔥 BAKANO Urban Streetwear</h2>
-    <p>15% OFF por Transferencia Bancaria | 3 Cuotas Sin Interés</p>
-    <div class="banner-step">📲 Catálogo Online: Armá tu carrito, generá tu orden de compra y enviala por WhatsApp para coordinar stock y pago. 🚀</div>
-  </div>
-</div>
+  <!-- HERO -->
+  <section class="py-10 px-4 sm:px-8 border-b border-zinc-800/80 text-center space-y-3 bg-gradient-to-b from-zinc-950 to-[#070709]">
+    <span class="inline-block px-3.5 py-1 bg-zinc-900 border border-zinc-700 text-zinc-300 text-[10px] font-extrabold uppercase tracking-widest rounded-full">
+      Colección 2026
+    </span>
+    <h1 class="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">
+      MODA URBANA & STREETWEAR
+    </h1>
+    <p class="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto">
+      Prendas premium seleccionadas. Aboná en 3 cuotas sin interés con todas las tarjetas o aprovechá un 15% OFF en transferencia directa.
+    </p>
+  </section>
 
-<div id="side-menu-overlay" class="side-menu-overlay" onclick="toggleSideMenu()"></div>
-<div id="side-menu" class="side-menu">
-  <div class="side-menu-header">
-    <h3>BAKANO</h3>
-    <button class="btn-close-menu" onclick="toggleSideMenu()">×</button>
-  </div>
-  
-  <ul class="menu-list">
-    <li class="menu-item">
-      <a class="menu-link" onclick="mostrarSeccionInfo('nosotros')">🧢 Nosotros</a>
-    </li>
-
-    <li class="menu-item">
-      <div class="menu-link" onclick="toggleSubMenuTienda()">
-        🛍️ Tienda / Categorías <span style="float:right;">▼</span>
-      </div>
-      <ul id="sub-menu-tienda" class="sub-menu-list">
-        <li class="sub-menu-item" onclick="seleccionarCategoria('Todas')">Ver Todos los Productos</li>
-        <li class="sub-menu-item" onclick="seleccionarCategoria('Favoritos')">❤️ Mis Favoritos</li>
-        <div id="lista-categorias-menu"></div>
-      </ul>
-    </li>
-
-    <li class="menu-item">
-      <a class="menu-link" onclick="mostrarSeccionInfo('importante')">ℹ️ Info Importante</a>
-    </li>
-
-    <li class="menu-item">
-      <a class="menu-link" onclick="mostrarSeccionInfo('contacto')">📞 Contacto</a>
-    </li>
-  </ul>
-</div>
-
-<div class="container">
-  <div id="grid-productos" class="grid-products">
-    <div class="empty-msg">Cargando catálogo...</div>
-  </div>
-</div>
-
-<footer>
-  <p class="footer-title">Nuestras Redes</p>
-  <p class="footer-sub">Este sitio funciona como un <b>Catálogo Online</b>. Al armar tu pedido se genera una orden de compra para enviar por WhatsApp.</p>
-  
-  <div class="footer-links">
-    <a href="https://instagram.com" target="_blank" class="footer-link link-ig">
-      📸 Instagram
-    </a>
-    <a href="https://wa.me/5491112345678" target="_blank" class="footer-link link-ws">
-      💬 WhatsApp Directo
-    </a>
-  </div>
-</footer>
-
-<a href="https://wa.me/5491112345678" target="_blank" class="wp-float-btn" title="Contactar por WhatsApp">
-  💬
-</a>
-
-<div id="cart-float-bar" class="cart-float-bar" style="display:none;" onclick="abrirModalCarrito()">
-  <div>
-    <span id="cart-badge-count" class="cart-badge-count">0</span>
-    <span style="font-weight: bold;">Ver mi Orden de Compra</span>
-  </div>
-  <div style="font-size: 1.1rem; font-weight: 800; color: #38bdf8;" id="cart-float-total">$ 0</div>
-</div>
-
-<div id="modal-carrito" class="modal-overlay" onclick="cerrarModalCarrito(event)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="cerrarModalCarritoForce()">×</button>
-    <h2>🛒 Mi Orden de Compra</h2>
-    <div id="cart-items-container" style="max-height: 250px; overflow-y: auto; margin-bottom: 12px;"></div>
-    
-    <div style="border-top: 1px solid var(--border); padding-top: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 4px;">
-      <div style="display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 800; color: #16a34a;">
-        <span>Total Transferencia (-15%):</span>
-        <span id="cart-modal-total-transfer">$ 0</span>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">
-        <span>Total Tarjeta (o 3 Cuotas):</span>
-        <span id="cart-modal-total-lista">$ 0</span>
-      </div>
+  <!-- CATÁLOGO -->
+  <main class="flex-1 px-4 sm:px-8 py-8 max-w-5xl mx-auto w-full space-y-6">
+    <div class="flex flex-wrap gap-2 pb-4 border-b border-zinc-800" id="categoryPills">
+      <button onclick="filtrarCategoria('TODOS')" class="badge-pill active px-4 py-2 rounded-xl text-xs uppercase font-extrabold cursor-pointer">Ver Todos</button>
     </div>
 
-    <button class="btn-save" onclick="enviarPedidoWhatsApp()">💬 Enviar Orden por WhatsApp</button>
-  </div>
-</div>
+    <div id="grilla-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto"></div>
+  </main>
 
-<div id="modal-login" class="modal-overlay" onclick="cerrarModalLogin(event)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="cerrarModalLoginForce()">×</button>
-    <h2>👤 Mi Perfil de Cliente</h2>
-    <div id="form-login-fields">
-      <input type="text" id="user-name" placeholder="Tu Nombre y Apellido">
-      <input type="text" id="user-contact" placeholder="Teléfono o Email">
-      <button class="btn-save" style="background:var(--primary);" onclick="guardarUsuario()">Iniciar Sesión</button>
-    </div>
-    <div id="user-logged-info" style="display:none; text-align:center;">
-      <p style="font-size: 1.05rem; margin-bottom: 8px;">¡Hola, <b id="display-user-name"></b>!</p>
-      <button class="btn-save" style="background: #ef4444;" onclick="cerrarSesionUsuario()">Cerrar Sesión</button>
-    </div>
-  </div>
-</div>
+  <!-- MODAL FICHA DE PRODUCTO -->
+  <div id="modal-producto" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-zinc-950 border border-zinc-800 rounded-3xl max-w-2xl w-full p-6 relative max-h-[92vh] overflow-y-auto space-y-5 shadow-2xl">
+      <button onclick="cerrarModalProducto()" class="absolute top-4 right-4 text-zinc-400 hover:text-white font-bold bg-zinc-900 border border-zinc-800 rounded-full w-8 h-8 flex items-center justify-center cursor-pointer">✕</button>
 
-<div id="modal-info" class="modal-overlay" onclick="cerrarModalInfo(event)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="cerrarModalInfoForce()">×</button>
-    <h2 id="info-modal-title">Info</h2>
-    <div id="info-modal-content" style="font-size:0.9rem; line-height:1.5;"></div>
-  </div>
-</div>
-
-<div id="lightbox-overlay" class="modal-overlay" onclick="cerrarLightbox(event)">
-  <button class="lightbox-close" onclick="cerrarLightboxForce()">×</button>
-  <div class="lightbox-box" onclick="event.stopPropagation()">
-    <img id="lightbox-img-target" class="lightbox-img" src="" alt="Foto ampliada">
-  </div>
-</div>
-
-<script>
-  let todosLosProductos = [];
-  let categoriaActual = 'Todas';
-  let listaFavoritos = [];
-  let carritoProductos = [];
-  let usuarioActual = null;
-
-  const NUMERO_WHATSAPP = '5491112345678';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    cargarUsuario();
-    cargarCatalogo();
-  });
-
-  function toggleSideMenu() {
-    document.getElementById('side-menu-overlay').classList.toggle('active');
-    document.getElementById('side-menu').classList.toggle('active');
-  }
-
-  function toggleSubMenuTienda() {
-    document.getElementById('sub-menu-tienda').classList.toggle('active');
-  }
-
-  function mostrarSeccionInfo(tipo) {
-    toggleSideMenu();
-    const modal = document.getElementById('modal-info');
-    const titulo = document.getElementById('info-modal-title');
-    const contenido = document.getElementById('info-modal-content');
-
-    if (tipo === 'nosotros') {
-      titulo.innerText = "🧢 Sobre Nosotros";
-      contenido.innerHTML = "<p>Bienvenida a <b>BAKANO</b>. Moda urbana, streetwear y denim importado de alta calidad.</p>";
-    } else if (tipo === 'importante') {
-      titulo.innerText = "ℹ️ Información Importante";
-      contenido.innerHTML = `
-        <p style="margin-bottom: 8px;">💸 <b>15% OFF</b> abonando por Transferencia Bancaria.</p>
-        <p style="margin-bottom: 8px;">💳 Pagá en <b>3 Cuotas Sin Interés</b>.</p>
-        <p style="margin-bottom: 8px;">🚚 Envíos a todo el país.</p>
-      `;
-    } else if (tipo === 'contacto') {
-      titulo.innerText = "📞 Contacto";
-      contenido.innerHTML = `<p>📱 <b>WhatsApp:</b> <a href="https://wa.me/${NUMERO_WHATSAPP}" target="_blank">+${NUMERO_WHATSAPP}</a></p>`;
-    }
-    modal.classList.add('active');
-  }
-
-  function cerrarModalInfo(e) { if (e.target.id === 'modal-info') cerrarModalInfoForce(); }
-  function cerrarModalInfoForce() { document.getElementById('modal-info').classList.remove('active'); }
-
-  function agregarAlCarrito(prodId, e) {
-    if (e) e.stopPropagation();
-    const prod = todosLosProductos.find(p => p.id === prodId);
-    if (!prod) return;
-
-    const exist = carritoProductos.find(item => item.id === prodId);
-    if (exist) { exist.cantidad++; } else { carritoProductos.push({ ...prod, cantidad: 1 }); }
-    actualizarBarraCarrito();
-  }
-
-  function quitarDelCarrito(prodId) {
-    carritoProductos = carritoProductos.filter(item => item.id !== prodId);
-    actualizarBarraCarrito();
-    renderizarCarritoModal();
-  }
-
-  function obtenerPrecioNumerico(p) {
-    let raw = p.lista !== undefined ? p.lista : (p.precio !== undefined ? p.precio : 0);
-    if (typeof raw === 'string') { raw = raw.replace(/\./g, '').replace(',', '.').replace(/[^0-9.]/g, ''); }
-    return parseFloat(raw) || 0;
-  }
-
-  function actualizarBarraCarrito() {
-    const totalItems = carritoProductos.reduce((acc, item) => acc + item.cantidad, 0);
-    const totalLista = carritoProductos.reduce((acc, item) => acc + (obtenerPrecioNumerico(item) * item.cantidad), 0);
-    const totalTransfer = Math.round(totalLista * 0.85);
-
-    const bar = document.getElementById('cart-float-bar');
-    if (totalItems > 0) {
-      document.getElementById('cart-badge-count').innerText = totalItems;
-      document.getElementById('cart-float-total').innerText = `$ ${totalTransfer.toLocaleString('es-AR')}`;
-      bar.style.display = 'flex';
-    } else {
-      bar.style.display = 'none';
-    }
-  }
-
-  function abrirModalCarrito() {
-    renderizarCarritoModal();
-    document.getElementById('modal-carrito').classList.add('active');
-  }
-
-  function cerrarModalCarrito(e) { if (e.target.id === 'modal-carrito') cerrarModalCarritoForce(); }
-  function cerrarModalCarritoForce() { document.getElementById('modal-carrito').classList.remove('active'); }
-
-  function renderizarCarritoModal() {
-    const container = document.getElementById('cart-items-container');
-    if (carritoProductos.length === 0) {
-      container.innerHTML = "<p style='text-align:center; color:var(--text-muted);'>Tu carrito está vacío.</p>";
-      document.getElementById('cart-modal-total-transfer').innerText = "$ 0";
-      document.getElementById('cart-modal-total-lista').innerText = "$ 0";
-      return;
-    }
-
-    let totalLista = 0;
-    container.innerHTML = carritoProductos.map(item => {
-      const precioUnitario = obtenerPrecioNumerico(item);
-      const subtotal = precioUnitario * item.cantidad;
-      totalLista += subtotal;
-      return `
-        <div class="cart-item-row">
-          <div>
-            <div style="font-weight:bold; font-size:0.88rem;">${item.nombre}</div>
-            <small style="color:var(--text-muted);">${item.cantidad}x $ ${precioUnitario.toLocaleString('es-AR')}</small>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+        <div class="space-y-3">
+          <div class="h-80 bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800">
+            <img id="m-img" src="" class="w-full h-full object-cover">
           </div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <span style="font-weight:bold; color:var(--primary-dark);">$ ${subtotal.toLocaleString('es-AR')}</span>
-            <button class="btn-remove-item" onclick="quitarDelCarrito(${item.id})">×</button>
-          </div>
+          <div id="m-thumbs" class="flex gap-2 overflow-x-auto pb-1"></div>
         </div>
-      `;
-    }).join('');
 
-    const totalTransfer = Math.round(totalLista * 0.85);
-    document.getElementById('cart-modal-total-transfer').innerText = `$ ${totalTransfer.toLocaleString('es-AR')}`;
-    document.getElementById('cart-modal-total-lista').innerText = `$ ${totalLista.toLocaleString('es-AR')}`;
-  }
-
-  function enviarPedidoWhatsApp() {
-    if (carritoProductos.length === 0) return alert("Agrega productos al carrito primero.");
-    
-    let clienteTxt = usuarioActual ? `Cliente: ${usuarioActual.nombre}\nContacto: ${usuarioActual.contacto}\n` : '';
-    let detalle = `¡Hola BAKANO!\n${clienteTxt}Quisiera confirmar la siguiente orden de compra:\n\n`;
-
-    let totalLista = 0;
-    carritoProductos.forEach(item => {
-      const sub = obtenerPrecioNumerico(item) * item.cantidad;
-      totalLista += sub;
-      detalle += `• ${item.cantidad}x ${item.nombre} - $ ${sub.toLocaleString('es-AR')}\n`;
-    });
-
-    const totalTransfer = Math.round(totalLista * 0.85);
-    detalle += `\n*TOTAL TRANSFERENCIA (-15%): $ ${totalTransfer.toLocaleString('es-AR')}*`;
-    detalle += `\nTotal Tarjeta / Lista: $ ${totalLista.toLocaleString('es-AR')}`;
-    detalle += `\n\n¿Me confirman stock para coordinar pago y envío?`;
-
-    window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(detalle)}`, '_blank');
-  }
-
-  function cargarUsuario() {
-    const rawUser = localStorage.getItem(`leslab_user_bakano`);
-    if (rawUser) {
-      usuarioActual = JSON.parse(rawUser);
-      document.getElementById('txt-login-header').innerText = usuarioActual.nombre.split(' ')[0];
-    } else {
-      document.getElementById('txt-login-header').innerText = 'Ingresar';
-    }
-    cargarFavoritos();
-  }
-
-  function abrirModalLogin() {
-    if (usuarioActual) {
-      document.getElementById('display-user-name').innerText = usuarioActual.nombre;
-      document.getElementById('form-login-fields').style.display = 'none';
-      document.getElementById('user-logged-info').style.display = 'block';
-    } else {
-      document.getElementById('form-login-fields').style.display = 'block';
-      document.getElementById('user-logged-info').style.display = 'none';
-    }
-    document.getElementById('modal-login').classList.add('active');
-  }
-
-  function cerrarModalLogin(e) { if (e.target.id === 'modal-login') cerrarModalLoginForce(); }
-  function cerrarModalLoginForce() { document.getElementById('modal-login').classList.remove('active'); }
-
-  function guardarUsuario() {
-    const name = document.getElementById('user-name').value.trim();
-    const contact = document.getElementById('user-contact').value.trim();
-    if (!name) return alert('Por favor escribe tu Nombre.');
-
-    usuarioActual = { nombre: name, contacto: contact };
-    localStorage.setItem(`leslab_user_bakano`, JSON.stringify(usuarioActual));
-    document.getElementById('txt-login-header').innerText = name.split(' ')[0];
-    cerrarModalLoginForce();
-    cargarFavoritos();
-  }
-
-  function cerrarSesionUsuario() {
-    localStorage.removeItem(`leslab_user_bakano`);
-    usuarioActual = null;
-    document.getElementById('txt-login-header').innerText = 'Ingresar';
-    cerrarModalLoginForce();
-    cargarFavoritos();
-    filtrarProductos();
-  }
-
-  function getFavKey() {
-    const idUser = usuarioActual ? usuarioActual.nombre.toLowerCase().replace(/\s+/g, '_') : 'guest';
-    return `leslab_favs_bakano_${idUser}`;
-  }
-
-  function cargarFavoritos() {
-    const rawFavs = localStorage.getItem(getFavKey());
-    listaFavoritos = rawFavs ? JSON.parse(rawFavs) : [];
-    renderizarCategorias();
-  }
-
-  function toggleFavorito(prodId, e) {
-    if (e) e.stopPropagation();
-    const index = listaFavoritos.indexOf(prodId);
-    if (index === -1) { listaFavoritos.push(prodId); } else { listaFavoritos.splice(index, 1); }
-    localStorage.setItem(getFavKey(), JSON.stringify(listaFavoritos));
-    renderizarCategorias();
-    filtrarProductos();
-  }
-
-  async function cargarCatalogo() {
-    try {
-      const resp = await fetch('productos.json?v=' + new Date().getTime());
-      if (!resp.ok) throw new Error("No se pudo cargar productos.json");
-      const data = await resp.json();
-      todosLosProductos = data;
-
-      renderizarCategorias();
-      filtrarProductos();
-    } catch (err) {
-      document.getElementById('grid-productos').innerHTML = `<div class="empty-msg">⚠️ No se pudieron cargar los productos.</div>`;
-    }
-  }
-
-  function renderizarCategorias() {
-    const contenedor = document.getElementById('lista-categorias-menu');
-    const categorias = [...new Set(todosLosProductos.map(p => p.categoria || p.seccion || 'General'))];
-
-    contenedor.innerHTML = categorias.map(cat => `
-      <li class="sub-menu-item" onclick="seleccionarCategoria('${cat}')">• ${cat}</li>
-    `).join('');
-  }
-
-  function seleccionarCategoria(cat) {
-    categoriaActual = cat;
-    if (document.getElementById('side-menu').classList.contains('active')) {
-      toggleSideMenu();
-    }
-    filtrarProductos();
-  }
-
-  function filtrarProductos() {
-    const query = document.getElementById('input-search').value.toLowerCase().trim();
-    const modoOrden = document.getElementById('select-sort').value;
-
-    let filtrados = todosLosProductos.filter(p => {
-      let coincideCat = false;
-      if (categoriaActual === 'Todas') {
-        coincideCat = true;
-      } else if (categoriaActual === 'Favoritos') {
-        coincideCat = listaFavoritos.includes(p.id);
-      } else {
-        coincideCat = (p.categoria === categoriaActual || p.seccion === categoriaActual);
-      }
-      const coincideBusqueda = (p.nombre || '').toLowerCase().includes(query);
-      return coincideCat && coincideBusqueda;
-    });
-
-    if (modoOrden === 'precio-menor') {
-      filtrados.sort((a, b) => obtenerPrecioNumerico(a) - obtenerPrecioNumerico(b));
-    } else if (modoOrden === 'precio-mayor') {
-      filtrados.sort((a, b) => obtenerPrecioNumerico(b) - obtenerPrecioNumerico(a));
-    }
-
-    renderizarGrid(filtrados);
-  }
-
-  function renderizarGrid(lista) {
-    const grid = document.getElementById('grid-productos');
-    if (lista.length === 0) {
-      grid.innerHTML = `<div class="empty-msg">No se encontraron productos en esta sección.</div>`;
-      return;
-    }
-
-    grid.innerHTML = lista.map(p => {
-      const disponible = (p.stock === undefined || p.stock > 0);
-      const esFav = listaFavoritos.includes(p.id);
-      
-      const precioBaseNum = obtenerPrecioNumerico(p);
-      const precioTransfNum = Math.round(precioBaseNum * 0.85);
-
-      const precioBaseStr = precioBaseNum.toLocaleString('es-AR');
-      const precioTransfStr = precioTransfNum.toLocaleString('es-AR');
-      const cuotaMontoStr = Math.round(precioBaseNum / (p.cuotas || 3)).toLocaleString('es-AR');
-      
-      const fotos = (p.imagenes && p.imagenes.length) ? p.imagenes : [(p.imagen_url || p.imagen || p.img || '')];
-      const fotoPrincipal = fotos[0] || 'https://via.placeholder.com/300?text=Sin+Foto';
-
-      return `
-        <div class="card">
-          <div class="img-wrapper">
-            <button class="btn-fav ${esFav ? 'active' : ''}" onclick="toggleFavorito(${p.id}, event)">
-              ${esFav ? '♥' : '♡'}
-            </button>
-            <img src="${fotoPrincipal}" alt="${p.nombre}" onclick="abrirFotoAmpliada('${fotoPrincipal}')">
-            <span class="badge-cat">${p.categoria || p.seccion || 'Streetwear'}</span>
-          </div>
-
-          <div class="card-body">
-            <div class="product-title">${p.nombre}</div>
+        <div class="space-y-4 flex flex-col justify-between">
+          <div class="space-y-3">
+            <span id="m-cat" class="text-[9px] font-black text-white uppercase tracking-widest px-2 py-0.5 bg-zinc-800 rounded"></span>
+            <h2 id="m-title" class="text-base font-black text-white uppercase leading-snug"></h2>
             
-            <div class="price-box">
-              <div class="price-main-amount">$ ${precioBaseStr}</div>
-              <div class="price-installment-text">${p.cuotas || 3} cuotas sin interés de $ ${cuotaMontoStr}</div>
-              <div class="price-transfer-text">$ ${precioTransfStr} pagando por transferencia (15% OFF)</div>
+            <div class="bg-zinc-900 p-3 rounded-xl border border-zinc-800 space-y-1 font-mono">
+              <div class="flex justify-between text-xs font-bold text-zinc-300">
+                <span>Precio de Lista:</span>
+                <span id="m-lista" class="text-white"></span>
+              </div>
+              <div class="flex justify-between text-[11px] text-zinc-400">
+                <span>3 cuotas sin interés de:</span>
+                <span id="m-cuota" class="text-zinc-200"></span>
+              </div>
+              <div class="flex justify-between text-xs pt-1 border-t border-zinc-800 font-bold text-emerald-400">
+                <span>15% OFF en Transferencia:</span>
+                <span id="m-transf"></span>
+              </div>
             </div>
 
-            ${disponible 
-              ? `<button class="btn-add-cart" onclick="agregarAlCarrito(${p.id}, event)">🛒 Agregar al Carrito</button>`
-              : `<button class="btn-add-cart" style="background:#cbd5e1;" disabled>Agotado</button>`
-            }
+            <div>
+              <label class="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Elegí tu Talle:</label>
+              <div id="m-talles" class="flex flex-wrap gap-1.5"></div>
+            </div>
+
+            <div>
+              <label class="block text-[10px] font-bold text-zinc-400 uppercase mb-1">Color / Lavado:</label>
+              <div id="m-colores" class="flex flex-wrap gap-1.5"></div>
+            </div>
+          </div>
+
+          <button onclick="agregarDesdeModal()" class="w-full py-3 btn-white rounded-xl text-xs uppercase font-black cursor-pointer shadow-xl">
+            🛒 Agregar al Pedido
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CARRITO -->
+  <div id="modal-carrito" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-zinc-950 border border-zinc-800 rounded-3xl max-w-md w-full p-6 space-y-4 relative shadow-2xl">
+      <div class="flex justify-between items-center border-b border-zinc-800 pb-3">
+        <h3 class="text-sm font-black text-white uppercase">Mi Pedido — BAKANO</h3>
+        <button onclick="cerrarCarrito()" class="text-zinc-400 hover:text-white font-bold cursor-pointer">✕</button>
+      </div>
+
+      <div id="items-carrito" class="space-y-2 max-h-56 overflow-y-auto pr-1"></div>
+
+      <div class="border-t border-zinc-800 pt-3 space-y-3">
+        <input type="text" id="c-nombre" placeholder="Tu Nombre y Apellido" class="w-full bg-zinc-900 border border-zinc-700 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-white">
+        <div class="bg-zinc-900 p-3 rounded-xl border border-zinc-800 space-y-1 font-mono text-xs">
+          <div class="flex justify-between text-zinc-400">
+            <span>Lista (3 cuotas):</span>
+            <span id="sub-lista" class="text-white font-bold">$0</span>
+          </div>
+          <div class="flex justify-between text-emerald-400 font-bold text-sm pt-1 border-t border-zinc-800">
+            <span>15% OFF en Transferencia:</span>
+            <span id="sub-transf">$0</span>
           </div>
         </div>
-      `;
-    }).join('');
-  }
+        <button onclick="enviarPedidoWhatsApp()" class="w-full py-3.5 btn-white rounded-xl text-xs uppercase tracking-wider font-black cursor-pointer">
+          📲 Enviar Pedido a WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
 
-  function abrirFotoAmpliada(urlFoto) {
-    if (!urlFoto) return;
-    const imgTarget = document.getElementById('lightbox-img-target');
-    imgTarget.src = urlFoto;
-    document.getElementById('lightbox-overlay').classList.add('active');
-  }
+  <script>
+    const WHATSAPP_NUMERO = "5492665329231";
 
-  function cerrarLightbox(e) { 
-    if (e.target.id === 'lightbox-overlay' || e.target.classList.contains('lightbox-close')) {
-      cerrarLightboxForce();
+    // CATÁLOGO BAKANO (VACÍO Y LISTO PARA CARGA)
+    const catalogo = [];
+
+    let categoriaFiltro = 'TODOS';
+    let carrito = JSON.parse(localStorage.getItem('bakano_prod_cart_v4') || '[]');
+    let productoSeleccionado = null;
+    let talleElegido = '';
+    let colorElegido = '';
+
+    function renderizar(productos) {
+      const cont = document.getElementById('grilla-productos');
+      const activos = productos.filter(p => p.inStock !== false);
+
+      if (!activos.length) {
+        cont.innerHTML = '<div class="col-span-full text-center py-20 text-zinc-500 text-xs font-bold uppercase tracking-wider">Cargando colección... Pasá el primer link para publicar prendas.</div>';
+        return;
+      }
+
+      cont.innerHTML = activos.map(p => {
+        const foto = (p.images && p.images.length) ? p.images[0] : p.image;
+        return `
+          <div class="card-luxury rounded-3xl p-5 flex flex-col justify-between space-y-4 cursor-pointer" onclick="abrirModal(${p.id})">
+            <div class="space-y-3">
+              <div class="w-full h-72 bg-zinc-950 rounded-2xl overflow-hidden border border-zinc-800 relative group">
+                <img src="${foto}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-300">
+                <span class="absolute top-3 left-3 text-[8px] font-black text-white uppercase tracking-widest px-2.5 py-1 bg-black/80 rounded-md border border-zinc-700">${p.category}</span>
+              </div>
+              <div>
+                <h3 class="text-sm font-black text-white uppercase mt-1 tracking-tight">${p.title}</h3>
+              </div>
+            </div>
+
+            <div class="space-y-3 pt-2 border-t border-zinc-800 font-mono">
+              <div class="bg-zinc-950 p-3 rounded-xl border border-zinc-800 text-xs space-y-1">
+                <div class="flex justify-between text-zinc-400"><span>Lista:</span><span class="text-white font-bold">$${p.p_lista.toLocaleString('es-AR')}</span></div>
+                <div class="flex justify-between text-[11px] text-zinc-400"><span>3x sin interés:</span><span class="text-zinc-200 font-bold">$${p.cuota_3.toLocaleString('es-AR')}</span></div>
+                <div class="flex justify-between text-emerald-400 font-bold pt-1.5 border-t border-zinc-800 text-xs"><span>15% OFF en Transferencia:</span><span>$${p.p_transf.toLocaleString('es-AR')}</span></div>
+              </div>
+              <button onclick="event.stopPropagation(); abrirModal(${p.id})" class="w-full py-2.5 btn-white rounded-xl text-xs uppercase font-black cursor-pointer font-sans shadow-lg">
+                Elegir Talle y Comprar
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
-  }
-  function cerrarLightboxForce() { 
-    document.getElementById('lightbox-overlay').classList.remove('active'); 
-  }
-</script>
 
+    function aplicarFiltros() {
+      const filtrados = catalogo.filter(p => categoriaFiltro === 'TODOS' || p.category === categoriaFiltro);
+      renderizar(filtrados);
+    }
+
+    function filtrarCategoria(cat) {
+      categoriaFiltro = cat;
+      document.querySelectorAll('#categoryPills .badge-pill').forEach(b => {
+        b.className = b.innerText.includes(cat) || (cat === 'TODOS' && b.innerText.includes('Todos')) 
+          ? 'badge-pill active px-4 py-2 rounded-xl text-xs uppercase font-extrabold cursor-pointer' 
+          : 'badge-pill px-4 py-2 text-zinc-300 rounded-xl text-xs uppercase font-bold cursor-pointer';
+      });
+      aplicarFiltros();
+    }
+
+    function abrirModal(id) {
+      productoSeleccionado = catalogo.find(p => p.id === id);
+      if (!productoSeleccionado) return;
+
+      document.getElementById('m-title').innerText = productoSeleccionado.title;
+      document.getElementById('m-cat').innerText = productoSeleccionado.category;
+      document.getElementById('m-lista').innerText = '$' + productoSeleccionado.p_lista.toLocaleString('es-AR');
+      document.getElementById('m-cuota').innerText = '$' + productoSeleccionado.cuota_3.toLocaleString('es-AR');
+      document.getElementById('m-transf').innerText = '$' + productoSeleccionado.p_transf.toLocaleString('es-AR');
+
+      const imgs = productoSeleccionado.images.length ? productoSeleccionado.images : [productoSeleccionado.image];
+      const mainImg = document.getElementById('m-img');
+      const thumbs = document.getElementById('m-thumbs');
+      mainImg.src = imgs[0];
+
+      thumbs.innerHTML = imgs.map(url => `
+        <img src="${url}" onclick="document.getElementById('m-img').src='${url}'" class="w-12 h-12 object-cover rounded-lg border border-zinc-800 cursor-pointer hover:border-white">
+      `).join('');
+
+      talleElegido = productoSeleccionado.sizes[0];
+      colorElegido = productoSeleccionado.colors[0];
+
+      document.getElementById('m-talles').innerHTML = productoSeleccionado.sizes.map((t, i) => `
+        <button onclick="setTalle('${t}', this)" class="variant-btn px-3 py-1 rounded-lg text-xs uppercase font-bold ${i === 0 ? 'selected' : ''}">${t}</button>
+      `).join('');
+
+      document.getElementById('m-colores').innerHTML = productoSeleccionado.colors.map((c, i) => `
+        <button onclick="setColor('${c}', this)" class="variant-btn px-3 py-1 rounded-lg text-xs uppercase font-bold ${i === 0 ? 'selected' : ''}">${c}</button>
+      `).join('');
+
+      document.getElementById('modal-producto').classList.remove('hidden');
+    }
+
+    function setTalle(t, btn) {
+      talleElegido = t;
+      btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function setColor(c, btn) {
+      colorElegido = c;
+      btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function cerrarModalProducto() { document.getElementById('modal-producto').classList.add('hidden'); }
+
+    function agregarDesdeModal() {
+      const key = `${productoSeleccionado.id}-${talleElegido}-${colorElegido}`;
+      const item = carrito.find(i => i.key === key);
+      if (item) {
+        item.cantidad += 1;
+      } else {
+        carrito.push({
+          key,
+          title: productoSeleccionado.title,
+          p_lista: productoSeleccionado.p_lista,
+          p_transf: productoSeleccionado.p_transf,
+          talle: talleElegido,
+          color: colorElegido,
+          cantidad: 1
+        });
+      }
+      localStorage.setItem('bakano_prod_cart_v4', JSON.stringify(carrito));
+      actualizarCarritoUI();
+      cerrarModalProducto();
+      abrirCarrito();
+    }
+
+    function abrirCarrito() { document.getElementById('modal-carrito').classList.remove('hidden'); }
+    function cerrarCarrito() { document.getElementById('modal-carrito').classList.add('hidden'); }
+
+    function actualizarCarritoUI() {
+      document.getElementById('cart-count').innerText = carrito.reduce((a, b) => a + b.cantidad, 0);
+      const cont = document.getElementById('items-carrito');
+      if (!carrito.length) {
+        cont.innerHTML = '<p class="text-xs text-zinc-500 text-center py-4">Tu pedido está vacío.</p>';
+        document.getElementById('sub-lista').innerText = '$0';
+        document.getElementById('sub-transf').innerText = '$0';
+        return;
+      }
+      let totalLista = 0, totalTransf = 0;
+      cont.innerHTML = carrito.map(i => {
+        totalLista += i.p_lista * i.cantidad;
+        totalTransf += i.p_transf * i.cantidad;
+        return `
+          <div class="flex justify-between items-center bg-zinc-900 p-2.5 rounded-xl border border-zinc-800 text-xs">
+            <div>
+              <div class="font-bold text-white uppercase text-[11px]">${i.title}</div>
+              <div class="text-[10px] text-zinc-400">Talle: ${i.talle} | ${i.color} (x${i.cantidad})</div>
+            </div>
+            <button onclick="eliminarItem('${i.key}')" class="text-zinc-500 hover:text-red-400 text-xs font-bold px-1 cursor-pointer">✕</button>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('sub-lista').innerText = '$' + totalLista.toLocaleString('es-AR');
+      document.getElementById('sub-transf').innerText = '$' + totalTransf.toLocaleString('es-AR');
+    }
+
+    function eliminarItem(key) {
+      carrito = carrito.filter(i => i.key !== key);
+      localStorage.setItem('bakano_prod_cart_v4', JSON.stringify(carrito));
+      actualizarCarritoUI();
+    }
+
+    function enviarPedidoWhatsApp() {
+      if (!carrito.length) return;
+      const nombre = document.getElementById('c-nombre').value.trim() || 'Cliente Web';
+      let totalLista = 0, totalTransf = 0;
+      let msg = `*🔥 NUEVO PEDIDO — BAKANO OFICIAL*%0A*Cliente:* ${encodeURIComponent(nombre)}%0A%0A*Prendas solicitadas:*%0A`;
+      carrito.forEach(i => {
+        totalLista += i.p_lista * i.cantidad;
+        totalTransf += i.p_transf * i.cantidad;
+        msg += `• ${i.cantidad}x ${encodeURIComponent(i.title)}%0A  ∟ Talle: ${encodeURIComponent(i.talle)} | Color: ${encodeURIComponent(i.color)}%0A`;
+      });
+      msg += `%0A*OPCIONES DE PAGO:*%0A`;
+      msg += `💳 *3 Cuotas sin interés:* $${totalLista.toLocaleString('es-AR')} (3x $${Math.round(totalLista / 3).toLocaleString('es-AR')})%0A`;
+      msg += `💵 *15% OFF en Transferencia:* $${totalTransf.toLocaleString('es-AR')}%0A%0AAguardando datos para abonar.`;
+      window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`, '_blank');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      aplicarFiltros();
+      actualizarCarritoUI();
+    });
+  </script>
 </body>
 </html>
