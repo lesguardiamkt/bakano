@@ -22,12 +22,10 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-white selection:text-black">
 
-  <!-- MARQUESINA -->
   <div class="bg-white text-black text-[11px] font-black uppercase tracking-widest py-2 text-center px-4 sticky top-0 z-50 shadow-md">
     ⚡ 3 CUOTAS SIN INTERÉS &nbsp;|&nbsp; 15% OFF EN TRANSFERENCIA &nbsp;|&nbsp; ENVÍOS A TODO EL PAÍS
   </div>
 
-  <!-- NAVEGACIÓN -->
   <header class="sticky top-[33px] z-40 glass-nav px-4 sm:px-8 py-4 flex items-center justify-between">
     <div class="flex items-center space-x-3">
       <span class="text-2xl sm:text-3xl font-black tracking-tighter text-white uppercase border-b-2 border-white pb-0.5">BAKANO</span>
@@ -40,7 +38,6 @@
     </button>
   </header>
 
-  <!-- HERO -->
   <section class="py-10 px-4 sm:px-8 border-b border-zinc-800/80 text-center space-y-3 bg-gradient-to-b from-zinc-950 to-[#070709]">
     <span class="inline-block px-3.5 py-1 bg-zinc-900 border border-zinc-700 text-zinc-300 text-[10px] font-extrabold uppercase tracking-widest rounded-full">
       Colección 2026
@@ -53,16 +50,15 @@
     </p>
   </section>
 
-  <!-- CATÁLOGO -->
   <main class="flex-1 px-4 sm:px-8 py-8 max-w-5xl mx-auto w-full space-y-6">
     <div class="flex flex-wrap gap-2 pb-4 border-b border-zinc-800" id="categoryPills">
       <button onclick="filtrarCategoria('TODOS')" class="badge-pill active px-4 py-2 rounded-xl text-xs uppercase font-extrabold cursor-pointer">Ver Todos</button>
+      <button onclick="filtrarCategoria('MEDIAS')" class="badge-pill px-4 py-2 text-zinc-300 rounded-xl text-xs uppercase font-bold cursor-pointer">🧦 Medias</button>
     </div>
 
     <div id="grilla-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto"></div>
   </main>
 
-  <!-- MODAL FICHA DE PRODUCTO -->
   <div id="modal-producto" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden z-50">
     <div class="bg-zinc-950 border border-zinc-800 rounded-3xl max-w-2xl w-full p-6 relative max-h-[92vh] overflow-y-auto space-y-5 shadow-2xl">
       <button onclick="cerrarModalProducto()" class="absolute top-4 right-4 text-zinc-400 hover:text-white font-bold bg-zinc-900 border border-zinc-800 rounded-full w-8 h-8 flex items-center justify-center cursor-pointer">✕</button>
@@ -114,7 +110,6 @@
     </div>
   </div>
 
-  <!-- MODAL CARRITO -->
   <div id="modal-carrito" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 hidden z-50">
     <div class="bg-zinc-950 border border-zinc-800 rounded-3xl max-w-md w-full p-6 space-y-4 relative shadow-2xl">
       <div class="flex justify-between items-center border-b border-zinc-800 pb-3">
@@ -146,8 +141,23 @@
   <script>
     const WHATSAPP_NUMERO = "5492665329231";
 
-    // CATÁLOGO BAKANO (VACÍO Y LISTO PARA CARGA)
-    const catalogo = [];
+    const catalogo = [
+      {
+        id: 1,
+        title: "PACK X4 MEDIAS TENIS RIVER ART. 03",
+        category: "MEDIAS",
+        p_lista: 15900,
+        cuota_3: 5300,
+        p_transf: 13500,
+        inStock: true,
+        image: "https://d22fxaf9t8d39k.cloudfront.net/8fd0ff30126570efab4a88741dd368a60751f5796c0bf5b7ae78b092462b0839408842.jpg",
+        images: [
+          "https://d22fxaf9t8d39k.cloudfront.net/8fd0ff30126570efab4a88741dd368a60751f5796c0bf5b7ae78b092462b0839408842.jpg"
+        ],
+        sizes: ["Talle único"],
+        colors: ["Único"]
+      }
+    ];
 
     let categoriaFiltro = 'TODOS';
     let carrito = JSON.parse(localStorage.getItem('bakano_prod_cart_v4') || '[]');
@@ -160,7 +170,7 @@
       const activos = productos.filter(p => p.inStock !== false);
 
       if (!activos.length) {
-        cont.innerHTML = '<div class="col-span-full text-center py-20 text-zinc-500 text-xs font-bold uppercase tracking-wider">Cargando colección... Pasá el primer link para publicar prendas.</div>';
+        cont.innerHTML = '<div class="col-span-full text-center py-20 text-zinc-500 text-xs font-bold uppercase tracking-wider">No hay prendas disponibles en este rubro.</div>';
         return;
       }
 
